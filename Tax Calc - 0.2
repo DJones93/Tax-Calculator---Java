@@ -13,16 +13,24 @@ public class Main {
         final int higherRateCeiling = 50_270;
         final int additionalRateCeiling = 150_000;
 
-            Scanner yearlyIncome = new Scanner(System.in);
-            System.out.print("Please Enter Your Yearly Income: ");
-            double income = yearlyIncome.nextDouble();
+        taxCalculation(basicRatePercentage, higherRatePercentage, additionalRatePercentage, personalAllowance, higherRateCeiling, additionalRateCeiling);
 
-            double basicTax = (income - personalAllowance) * basicRatePercentage;
-            double higherTax = (income - higherRateCeiling) * higherRatePercentage + basicTax;
-            double maxTax = (income - additionalRateCeiling) * additionalRatePercentage + higherTax;
+    }
 
-            System.out.print("Your Yearly Tax for an income of " + income + " is " + higherTax);
+    private static void taxCalculation(float basicRatePercentage, float higherRatePercentage, float additionalRatePercentage, int personalAllowance, int higherRateCeiling, int additionalRateCeiling) {
+        Scanner yearlyIncome = new Scanner(System.in);
+        System.out.print("Please Enter Your Yearly Income: ");
+        double income = yearlyIncome.nextDouble();
 
+        double basicTax = (income - personalAllowance) * basicRatePercentage;
+        double higherTax = (income - higherRateCeiling) * higherRatePercentage + basicTax;
+        double maxTax = (income - additionalRateCeiling) * additionalRatePercentage + higherTax;
+
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        String money = currency.format(maxTax);
+        String customerIncome = currency.format(income);
+
+        System.out.print("Your Yearly Tax for an income of " + customerIncome + " is " + money);
     }
 
 }
