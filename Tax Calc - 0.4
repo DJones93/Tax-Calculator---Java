@@ -1,0 +1,46 @@
+package com.Declan;
+
+import java.text.NumberFormat;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        final float basicRatePercentage = (float) 0.2;
+        final float higherRatePercentage = (float) 0.4;
+        final float additionalRatePercentage = (float) 0.45;
+        final int personalAllowance = 12_570;
+        final int higherRateCeiling = 50_270;
+        final int additionalRateCeiling = 150_000;
+
+        taxCalculation(basicRatePercentage, higherRatePercentage, additionalRatePercentage, personalAllowance, higherRateCeiling, additionalRateCeiling);
+    }
+
+    private static void taxCalculation(float basicRatePercentage, float higherRatePercentage, float additionalRatePercentage, int personalAllowance, int higherRateCeiling, int additionalRateCeiling) {
+        Scanner yearlyIncome = new Scanner(System.in);
+        System.out.print("Please Enter Your Yearly Income: ");
+        double income = yearlyIncome.nextDouble();
+
+        double basicTax = (income - personalAllowance) * basicRatePercentage;
+        double higherTax = (income - higherRateCeiling) * higherRatePercentage + basicTax;
+        double maxTax = (income - additionalRateCeiling) * additionalRatePercentage + higherTax;
+
+        if (income >= higherRateCeiling) ;
+        {
+            NumberFormat currency = NumberFormat.getCurrencyInstance();
+            String money = currency.format(basicTax);
+            String customerIncome = currency.format(income);
+            System.out.print("Your Yearly Tax for an income of " + customerIncome + " is " + money);
+        } else if (income < higherRateCeiling && income > additionalRateCeiling) {
+            NumberFormat currency = NumberFormat.getCurrencyInstance();
+            String money = currency.format(higherTax);
+            String customerIncome = currency.format(income);
+            System.out.print("Your Yearly Tax for an income of " + customerIncome + " is " + money);
+        } else {
+            NumberFormat currency = NumberFormat.getCurrencyInstance();
+            String money = currency.format(maxTax);
+            String customerIncome = currency.format(income);
+            System.out.print("Your Yearly Tax for an income of " + customerIncome + " is " + money);
+        }
+    }
+}
